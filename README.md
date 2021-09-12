@@ -1,1 +1,2 @@
 # SB_toolbox
+This repository contains a demo code for computing brain state transition cost via Schrödinger bridge. For computing the cost, we are using sinkhornTransport.m, which was developed by Marco Cuturi (https://marcocuturi.net/SI.html).
