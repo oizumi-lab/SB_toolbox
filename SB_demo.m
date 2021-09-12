@@ -5,14 +5,6 @@
 % "Quantifying brain state transition cost via Schrodinger bridge"
 %
 
-%% 0. save 
-Q = reshape(mean(DF.JPDS(1,:,:,:),4), [8 8]);
-probDists = mean(DF.probDists,3);
-disp(size(pd));
-Data.Q = Q;
-Data.probDists = probDists;
-save('demo_data.mat','Data');
-
 %% 1. Loading data
 load('./demo_data.mat');
 Q = Data.Q; % the uncontrolled path (the joint dsitribution, q(X_0,X_T))
