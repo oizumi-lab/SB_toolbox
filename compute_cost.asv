@@ -1,4 +1,4 @@
-function [P,KLD] = compute_cost(ini_dist,tar_dist,Q)
+function [P,KLD] = opt(ini_dist,tar_dist,Q)
 %
 % Function for computing the optimally controlled joint endpoint
 % distribution and transition cost.
@@ -27,7 +27,9 @@ P = P/sum(sum(P));
 KLD = 0.0;
 for i=1:k
     for j=1:k
-        KLD = KLD + P(i,j)*(log2(P(i,j))-log2(Q(i,j)));
+        if P(i,j) ~= 0
+            KLD = KLD + P(i,j)*(log(P(i,j))-log(Q(i,j)));
+        end
     end
 end
 

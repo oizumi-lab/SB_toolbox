@@ -1,0 +1,37 @@
+function [KLD,P] = solveSBP(ini_dist,tar_dist,Q)
+%
+% Function for computing the minimum control cost and the optimally controlled
+% joint end point distribution P
+%
+% Input: 
+%   - ini_dist : initial distribution (k x 1 vector)
+%   - tar_dist : target distribution (k x 1 vector) 
+%   - Q : uncontrolled endpoint distribution (k x k matrix)
+% Output: 
+%   - KLD: control cost, KL divergence between the uncontrolled 
+%          and controlled paths.
+%   - P : optimally controlled endpoint distribution (k x k matrix)
+%   
+% Note that k is the number of brain states (clusters)
+%
+
+%% Computing P*
+k = size(ini_dist,1);
+U = Q.*(-log(Q));
+lambda = 1;
+[D,L,u,v]=sinkhornTransport(ini_dist,tar_dist,Q,U,lambda,'marginalDifference');
+
+P = bsxfun(@times,v',(bsxfun(@times,u,Q)));
+P = P/sum(sum(P));
+
+%% Computing KLD
+KLD = 0.0;
+for i=1:k
+    for j=1:k
+        if P(i,j) ~= 0
+            KLD = KLD + P(i,j)*(log(P(i,j))-log(Q(i,j)));
+        end
+    end
+end
+
+end

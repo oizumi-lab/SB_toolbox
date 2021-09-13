@@ -1,9 +1,11 @@
 %
 % Demo program for computing brain state transition cost from
 % the resting state to 0-back and 2-back tasks
-%
-% "Quantifying brain state transition cost via Schrodinger bridge"
-%
+% This code generates Fig. 3 (a) in
+% Quantifying brain state transition cost via Schrödinger’s bridge
+% Genji Kawakita, Shunsuke Kamiya, Shuntaro Sasai, Jun Kitazono, Masafumi Oizumi
+% bioRxiv: https://doi.org/10.1101/2021.05.24.445394
+% 
 
 %% 1. Loading data
 load('./demo_data.mat');
@@ -16,9 +18,9 @@ wm2_dist = Data.probDists(9,:); % probability distribution for 2-back task
 %     0-back and 2-back tasks
 
 % cost for rest -> 0-back
-[P_0back,cost_0back] = compute_cost(rest_dist',wm0_dist',Q);
+cost_0back = solveSBP(rest_dist',wm0_dist',Q);
 % cost for rest -> 2-back
-[P_2back,cost_2back] = compute_cost(rest_dist',wm2_dist',Q);
+cost_2back = solveSBP(rest_dist',wm2_dist',Q);
 
 %% 3. Plotting the result
 
