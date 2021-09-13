@@ -1,4 +1,4 @@
-# SB_toolbox
+# Schrödinger’s Bridge toolbox
 Genji Kawakita and Masafumi Oizumi (The University of Tokyo) \
 Email: gkawakita (at) g.ecc.u-tokyo.ac.jp, c-oizumi (at) g.ecc.u-tokyo.ac.jp
 
