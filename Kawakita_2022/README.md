@@ -1,6 +1,6 @@
 # Schrödinger’s Bridge toolbox
 Genji Kawakita and Masafumi Oizumi (The University of Tokyo) \
-Email: gkawakita (at) g.ecc.u-tokyo.ac.jp, c-oizumi (at) g.ecc.u-tokyo.ac.jp
+Email: g.kawakita22 (at) imperial.ac.uk, c-oizumi (at) g.ecc.u-tokyo.ac.jp
 
 This repository contains a MATLAB code for computing the optimal control cost in stochastic systems by solving the Schrödinger’s bridge problem (solveSBP.m). \
 Please run "SB_demo.m" first for understanding how to use the code. \
