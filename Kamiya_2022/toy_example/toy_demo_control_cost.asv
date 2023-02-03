@@ -64,11 +64,10 @@ for kk = 1:dim
     A_d_hat(kk,:) = A_kk';
 end
 
-A_hat   = logm(A_d_hat)/TR; % Estimation of A
+A_hat   = logm(A_d_hat)/TR;   % Estimation of A
 BtB_hat = -(A_hat * Sigma_1 + Sigma_1 * A_hat'); % Estimation of BtB
-
-% Note: In our article, we used a different method to estimate BtB from
-% data. See Eq. (19) in the manuscript.
+% In our article, we used a different method to estimate BtB from data. See
+% Eq. (19) in the manuscript.
 
 %% Step 3: compute mean & covariance control costs
 % Here we compute control cost to alter the distribution in one second. 
