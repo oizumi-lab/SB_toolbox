@@ -44,12 +44,12 @@ load('../Data.mat')
 mvt_btstrp = Compute_Control_Cost(P, emp, params);
 
 %% show bar figures
-% tasks_included_vec = [1:nTasks];          % change this to select tasks to include in graph
-% 
-% close all
-% [f,lgd] = control_cost_make_bargraph(tasks_included_vec, mvt_btstrp);
-% title([FigPars.bars_to_show(6:end), ' control costs'])
-% 
-% set(gca, 'FontSize',18);
-% set(lgd, 'FontSize',18);
+tasks_included_vec = [1:nTasks];          % change this to select tasks to include in graph
+
+close all
+[f,lgd] = control_cost_make_bargraph(tasks_included_vec, mvt_btstrp);
+title('Control costs')
+
+set(gca, 'FontSize',18);
+set(lgd, 'FontSize',18);
 

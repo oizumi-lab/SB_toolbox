@@ -1,0 +1,113 @@
+function [f,lgd] = control_cost_make_bargraph(tasks_included_vec, mvt_btstrp)
+
+clear ctr; clear ydt;
+
+% FigPar.tasks_included_vec = [1:25];  % change this to select tasks to include in graph
+% FigPar.task_detailed = 1; % choose 0 or 1 to change categories of tasks
+% FigPar.bars_to_show = 'all';   % choose from 'all', 'only_total', 'only_mean', 'only_covariance'
+% FigPar.bars_order   = 'normal';    % choose from 'normal' or 'ascending'
+
+all_task_list_another =...
+    {'REST1', 'REST2', 'EMOTION', 'GAMBLING', 'LANGUAGE',...
+    'MOTOR', 'RELATIONAL', 'SOCIAL', 'WM'};
+tasks_label = all_task_list_another(tasks_included_vec);
+
+yy = mvt_btstrp(tasks_included_vec,:,:);
+er = std(yy,0,3); 
+
+%% 
+yy_mean = mean(yy,3);
+rank_vec = tiedrank(yy_mean(:,3));
+order_vec = sortrows([ [1:length( tasks_included_vec)]',rank_vec],2);
+order_vec = order_vec(:,1);
+yy_mean = yy_mean(order_vec,:);
+er = sortrows([order_vec, er]);
+er(:,1) = [];
+
+tasks_label_fig = tasks_label(order_vec)';
+X = categorical(tasks_label_fig);
+X = reordercats(X, tasks_label_fig);
+hBar = bar(yy_mean);%(X,yy_mean,'grouped');
+for k1 = 1:size(yy,2)
+    ctr(k1,:) = bsxfun(@plus, hBar(k1).XData, hBar(k1).XOffset');
+    ydt(k1,:) = hBar(k1).YData;
+end
+hold on
+errorbar(ctr, ydt, er', '.k');
+hold off
+
+lgd = legend('Mean control','Covariance control','Total control','location','southoutside','Orientation','horizontal');
+lgd.FontSize = 8;
+
+%%
+% f = figure('DefaultTextFontName', 'Helvetica', 'DefaultAxesFontName', 'Helvetica');
+% if strcmp(FigPars.bars_to_show, 'all')
+%     yy_mean = mean(yy,3);
+%     if strcmp(FigPars.bars_order, 'ascending')
+%         rank_vec = tiedrank(yy_mean(:,3));
+%         order_vec = sortrows([ [1:length( FigPars.tasks_included_vec)]',rank_vec],2);
+%         order_vec = order_vec(:,1);
+%         yy_mean = yy_mean(order_vec,:);
+%         %yy_mean = sortrows([order_vec, yy_mean]);
+%         %yy_mean(:,1) = [];
+%         er = sortrows([order_vec, er]);
+%         er(:,1) = [];
+%         tasks_label_fig = tasks_label(order_vec)';
+%     elseif strcmp(FigPars.bars_order, 'normal')
+%         tasks_label_fig = tasks_label';
+%     end
+%     X = categorical(tasks_label_fig);
+%     X = reordercats(X, tasks_label_fig);
+%     hBar = bar(yy_mean);%(X,yy_mean,'grouped');
+%     for k1 = 1:size(yy,2)
+%         ctr(k1,:) = bsxfun(@plus, hBar(k1).XData, hBar(k1).XOffset');       % Note: ???XOffset??? Is An Undocumented Feature, This Selects The ???bar??? Centres
+%         ydt(k1,:) = hBar(k1).YData;                                         % Individual Bar Heights
+%     end
+%     hold on
+%     errorbar(ctr, ydt, er', '.k');
+%     hold off
+%     %title('Stochastic control energy needed for state transitions')
+%     lgd = legend('Mean control','Covariance control','Total control','location','southoutside','Orientation','horizontal');
+%     lgd.FontSize = 8;
+% else
+%     %%
+%     types_names = {'only_mean', 'only_covariance', 'only_total'};
+%     yy_mean = mean(squeeze(yy(:,find(strcmp(types_names, FigPars.bars_to_show)),:)),2);
+% 
+%     if strcmp(FigPars.bars_order, 'ascending')
+%         rank_vec = tiedrank(yy_mean);
+%         order_vec = sortrows([[1:length( FigPars.tasks_included_vec)]',rank_vec],2);
+%         order_vec = order_vec(:,1);
+%         yy_mean = yy_mean(order_vec,:);
+%         er = sortrows([order_vec, er]);
+%         er(:,1) = [];
+%         tasks_label_fig = tasks_label(order_vec)';
+%     elseif strcmp(FigPars.bars_order, 'normal')
+%         tasks_label_fig = tasks_label';
+%     end
+%     X = categorical(tasks_label_fig);
+%     hBar = bar(yy_mean);
+%     hold on
+%     erb = errorbar(yy_mean, er(:,3)');    
+%     erb.Color = [0 0 0];                            
+%     erb.LineStyle = 'none';
+%     
+%     if find(strcmp(types_names, FigPars.bars_to_show)) == 2
+%         set(hBar, 'FaceColor', [0.8500, 0.3250, 0.0980])
+%     elseif find(strcmp(types_names, FigPars.bars_to_show)) == 3
+%         set(hBar, 'FaceColor', [0.9290, 0.6940, 0.1250])
+%     end
+%     
+%     title_cell = {'Mean control','Covariance control','Total control'};
+%     lgd = legend(title_cell{find(strcmp(types_names, FigPars.bars_to_show))},...
+%         'location','southoutside','Orientation','horizontal');
+% end
+%     
+set(gca,'XTick', [1:length( FigPars.tasks_included_vec)], 'XTickLabel', tasks_label_fig, 'fontsize', 8)
+if size(FigPars.tasks_included_vec,2) > 5
+    set(gca, 'XTickLabelRotation',330)
+end
+
+set(gcf,'Position',[30 100 750 600])
+
+end
