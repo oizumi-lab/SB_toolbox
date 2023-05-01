@@ -1,4 +1,6 @@
 
+addpath(genpath('../'))
+
 k = 8; % Task 'Social'
 %itr = 1;
 
@@ -59,13 +61,11 @@ times_snapshots = [0:0.1:1];
 steps_snapshots = floor(times_snapshots/dt)+1;
 
 niifile_save_dir_name = 'ROI_control_inputs_time_series';
-mkdir(niifile_save_dir_name)
+mkdir(['../',niifile_save_dir_name])
 for jj = 1:length(steps_snapshots)
-    save_nii_file_fixed([niifile_save_dir_name, '/',task_list{k},'_total_step_', num2str(steps_snapshots(jj))], total_ROI_ts(steps_snapshots(jj),:), dim);
-    save_nii_file_fixed([niifile_save_dir_name, '/',task_list{k},'_mean_step_',  num2str(steps_snapshots(jj))], mean_ROI_ts(steps_snapshots(jj),:), dim);
-    save_nii_file_fixed([niifile_save_dir_name, '/',task_list{k},'_cov_step_',   num2str(steps_snapshots(jj))], cov_ROI_ts(steps_snapshots(jj),:), dim);
+    save_nii_file_fixed(['../',niifile_save_dir_name, '/',task_list{k},'_total_step_', num2str(steps_snapshots(jj))], total_ROI_ts(steps_snapshots(jj),:), dim);
+    save_nii_file_fixed(['../',niifile_save_dir_name, '/',task_list{k},'_mean_step_',  num2str(steps_snapshots(jj))], mean_ROI_ts(steps_snapshots(jj),:), dim);
+    save_nii_file_fixed(['../',niifile_save_dir_name, '/',task_list{k},'_cov_step_',   num2str(steps_snapshots(jj))], cov_ROI_ts(steps_snapshots(jj),:), dim);
     
 end
-
-
 
